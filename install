@@ -17,11 +17,18 @@ myint=`ifconfig | grep -B1 "inet addr:$myip" | head -n1 | awk '{print $1}'`;
                sleep 1
                
 clear
-
 apt-get update
+
+clear
+echo -e "${green}install squid...${NC}"
 apt-get -y install squid
+
+clear
+echo -e "${green}enable squid...${NC}"
 systemctl enable squid
 
+clear
+echo -e "${green}update squid...${NC}"
 cd /etc/squid
 rm -f squid.conf
 rm -f pswds
@@ -30,9 +37,15 @@ wget https://raw.githubusercontent.com/lnwseed/run_proxy/main/squid.conf
 wget https://raw.githubusercontent.com/lnwseed/run_proxy/main/pswds
 
 
+clear
+echo -e "${green}send whitelist...${NC}"
 ufw allow
 curl ifconfig.me >> /etc/squid/whitelist
 
+clear
+echo -e "${green}add useraccess...${NC}"
 apt-get install apache2-utils -y
 
+clear
+echo -e "${green}squid restart...${NC}"
 service squid restart
