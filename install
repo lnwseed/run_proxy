@@ -1,3 +1,30 @@
+#!/bin/bash
 
-#SETPASS ROOT
-sudo passwd root
+myip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | head -n1`;
+myint=`ifconfig | grep -B1 "inet addr:$myip" | head -n1 | awk '{print $1}'`;
+
+ red='\e[1;31m'
+               green='\e[0;32m'
+               NC='\e[0m'
+			   
+               echo "Connect ocspanel.info..."
+               sleep 1
+               
+			   echo "กำลังตรวจสอบ Permision..."
+               sleep 1
+               
+			   echo -e "${green}ได้รับอนุญาตแล้ว...${NC}"
+               sleep 1
+               
+clear
+
+apt-get update
+apt-get -y install squid
+systemctl enable squid
+
+cd /etc/squid
+rm -f squid.conf
+rm -f pswds
+
+
+wget https://github.com/rasta-team/Full-OCS/raw/master/panelocs.zip
