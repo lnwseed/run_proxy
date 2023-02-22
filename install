@@ -1,0 +1,3 @@
+
+#SETPASS ROOT
+sudo passwd root
